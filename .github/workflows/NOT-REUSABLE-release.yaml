@@ -1,0 +1,14 @@
+---
+name: Release
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  basic-release:
+    uses: ./.github/workflows/push-basic-release.yaml
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write

@@ -1,0 +1,23 @@
+name: basic-release
+on:
+  workflow_call:
+
+jobs:
+  release-github:
+    name: Create Release on Github
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    outputs:
+      new_release_version: ${{ steps.semantic-release.outputs.new_release_version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Semantic Release
+        id: semantic-release
+        uses: cycjimmy/semantic-release-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # personal access token

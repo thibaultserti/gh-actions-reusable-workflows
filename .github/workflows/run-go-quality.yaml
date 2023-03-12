@@ -1,0 +1,57 @@
+name: go-quality
+on:
+  workflow_call:
+    inputs:
+      go-version:
+        default: "['1.18','1.19','1.20.x']"
+        required: false
+        type: string
+      golangci-lint-version:
+        default: "v1.51.2"
+        required: false
+        type: string
+      goreleaser-version:
+        default: "v1.16.1"
+        required: false
+        type: string
+
+jobs:
+  quality:
+    name: Check Golang quality
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: ${{ fromJson(inputs.go-version) }}
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: ${{ matrix.go-version }}
+
+    - name: Go fmt
+      run: go fmt ./...
+
+    - name: Go vet
+      run: go vet ./...
+
+    - name: Go lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: ${{ inputs.golangci-lint-version }}
+        skip-pkg-cache: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Go tests
+      run: go test ./test
+
+    - name: Run GoReleaser
+      uses: goreleaser/goreleaser-action@v4
+      with:
+        version: ${{ inputs.goreleaser-version }}
+        args: build --snapshot --clean
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

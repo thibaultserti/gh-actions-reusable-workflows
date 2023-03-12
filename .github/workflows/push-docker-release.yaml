@@ -1,0 +1,64 @@
+name: docker-push
+on:
+  workflow_call:
+    inputs:
+      goreleaser-version:
+        default: "v1.16.1"
+        required: false
+        type: string
+      platforms:
+        default: "linux/amd64,linux/arm/v7,linux/arm64/v8"
+        required: false
+        type: string
+      pre-built-image:
+        default: true
+        required: false
+        type: string
+      release:
+        required: true
+        type: string
+
+jobs:
+  release-docker:
+    name: Push Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ vars.REGISTRY }}/${{ vars.NAME }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        if: ${{ inputs.use-prebuilt-image }}
+        with:
+          name: ${{ vars.NAME }}
+          path: /tmp
+
+      - name: Load image
+        if: ${{ inputs.use-prebuilt-image }}
+        run: |
+          docker load --input /tmp/${{ vars.NAME }}.tar
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ vars.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}:v${{ inputs.release }}
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: ${{ inputs.platforms }}

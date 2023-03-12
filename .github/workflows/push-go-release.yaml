@@ -1,0 +1,45 @@
+name: go-release
+on:
+  workflow_call:
+    inputs:
+      goreleaser-version:
+        default: "v1.16.1"
+        required: false
+        type: string
+    outputs:
+      new_release_version:
+        description: "Release version"
+        value: ${{ jobs.release-github.outputs.new_release_version }}
+jobs:
+  # check-variables:
+  #   uses: ./.github/workflows/check-gh-vars.yaml
+  #   with:
+  #     gh-vars: "['NAME','REGISTRY']"
+
+  release-github:
+    name: Create Release on Github
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    outputs:
+      new_release_version: ${{ steps.semantic-release.outputs.new_release_version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Semantic Release
+        id: semantic-release
+        uses: cycjimmy/semantic-release-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # personal access token
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v4
+        with:
+          distribution: goreleaser
+          version: ${{ inputs.goreleaser-version }}
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
