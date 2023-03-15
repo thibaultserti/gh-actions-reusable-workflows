@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.1.0...v1.1.1) (2023-03-15)
+
+
+### Bug Fixes
+
+* fix typo ([30be205](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/30be205c901f401e80b3e901e3b98f2611b7535f))
+
 # [1.1.0](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.0.0...v1.1.0) (2023-03-15)
 
 
