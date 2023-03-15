@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.1.1...v1.2.0) (2023-03-15)
+
+
+### Features
+
+* add plugins exec to python sem release ([36e14da](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/36e14dac08c9dcabc55c83d18642a3f7e8c5831b))
+
 ## [1.1.1](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.1.0...v1.1.1) (2023-03-15)
 
 
