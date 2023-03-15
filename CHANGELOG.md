@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.2.0...v1.3.0) (2023-03-15)
+
+
+### Features
+
+* add platforms to docker build inputs ([568c5fc](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/568c5fc2c85c072872fed7adc2c73ae561829ddd))
+
 # [1.2.0](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.1.1...v1.2.0) (2023-03-15)
 
 
