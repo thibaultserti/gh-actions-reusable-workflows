@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.3.0...v1.3.1) (2023-03-15)
+
+
+### Bug Fixes
+
+* remove platforms support in docker build test ([46d7f0d](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/46d7f0d123bd182de751754b3138b5ebc7e411c5))
+
 # [1.3.0](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.2.0...v1.3.0) (2023-03-15)
 
 
