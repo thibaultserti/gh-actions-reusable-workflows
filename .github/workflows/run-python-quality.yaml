@@ -1,4 +1,4 @@
-name: go-python
+name: python-quality
 on:
   workflow_call:
     inputs:
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go-version: ${{ fromJson(inputs.python-version) }}
+        python-version: ${{ fromJson(inputs.python-version) }}
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
