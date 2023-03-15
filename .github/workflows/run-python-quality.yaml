@@ -1,0 +1,62 @@
+name: go-python
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        default: "['3.8','3.9','3.10']"
+        required: false
+        type: string
+      poetry-version:
+        default: "1.4.0"
+        required: false
+        type: string
+
+jobs:
+  quality:
+    name: Check Python quality
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: ${{ fromJson(inputs.python-version) }}
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Python Poetry
+      uses: abatilo/actions-poetry@v2
+      with:
+        poetry-version: ${{ inputs.poetry-version }}
+
+    - name: Configure Poetry
+      shell: bash
+      run: |
+        poetry config virtualenvs.in-project true
+
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      id: cache-dependencies
+      with:
+        path: |
+          .venv
+          ~/.cache/pypoetry
+        key: ${{ runner.os }}-python-${{ matrix.python-version }}-venv-${{ hashFiles('**/poetry.lock') }}
+
+    - name: Install dependencies
+      run: poetry update
+
+    - name: Pylint
+      run: poetry run python -m black -vv src/ tests/
+
+    - name: Pylint
+      run: poetry run python -m pylint -vv src/ tests/
+
+    - name: Mypy
+      run: poetry run python -m mypy --install-types --non-interactive src/  tests/
+
+    - name: Pytest
+      run: poetry run python -m pytest tests/
