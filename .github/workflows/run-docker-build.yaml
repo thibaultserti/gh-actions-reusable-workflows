@@ -1,7 +1,11 @@
 name: docker-build
 on:
   workflow_call:
-
+    inputs:
+      platforms:
+        default: "linux/amd64,linux/arm/v7,linux/arm64/v8"
+        required: false
+        type: string
 jobs:
   build:
     name: Check Docker build
@@ -19,6 +23,7 @@ jobs:
         context: .
         tags: ${{ vars.NAME }}:latest
         outputs: type=docker,dest=/tmp/${{ vars.NAME }}.tar
+        platforms: ${{ inputs.platforms }}
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
