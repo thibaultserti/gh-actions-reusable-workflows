@@ -77,7 +77,7 @@ jobs:
 
       - name: 📝 Sign container image with annotations from our environment
         run: |
-          cosign sign --key cosign.key \
+          cosign sign -y \
             -a "repo=${{ github.repository }}" \
             -a "workflow=${{ github.workflow }}" \
             -a "ref=${{ github.sha }}" \
