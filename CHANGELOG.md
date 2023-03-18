@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.5.2...v1.5.3) (2023-03-18)
+
+
+### Bug Fixes
+
+* fix needless check-secrets ([0cb24a9](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/0cb24a93e76c0ff890bfe80e15ed5b8e1e2045c9))
+
 ## [1.5.2](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.5.1...v1.5.2) (2023-03-18)
 
 
