@@ -74,7 +74,7 @@ jobs:
           platforms: ${{ inputs.platforms }}
 
       - name: ⚙️ Setup Sigstore
-        uses: sigstore/cosign-installer@v2
+        uses: sigstore/cosign-installer@v3
 
       - name: 📝 Sign container image with annotations from our environment
         run: |
