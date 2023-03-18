@@ -10,13 +10,17 @@ on:
         default: "linux/amd64,linux/arm/v7,linux/arm64/v8"
         required: false
         type: string
-      pre-built-image:
+      use-prebuilt-image:
         default: true
         required: false
-        type: string
+        type: boolean
       release:
         required: true
         type: string
+      enable-signing:
+        default: false
+        required: false
+        type: boolean
 
 jobs:
   check-variables:
@@ -74,12 +78,14 @@ jobs:
           platforms: ${{ inputs.platforms }}
 
       - name: ⚙️ Setup Sigstore
+        if: ${{ inputs.enable-signing }}
         uses: sigstore/cosign-installer@v3
 
       - name: 📝 Sign container image with annotations from our environment
+        if: ${{ inputs.enable-signing }}
         run: |
           cosign sign -y \
             -a "repo=${{ github.repository }}" \
             -a "workflow=${{ github.workflow }}" \
             -a "ref=${{ github.sha }}" \
-            ${{ steps.docker_push.outputs.digest }}
+            ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}@${{ steps.docker_push.outputs.digest }}
