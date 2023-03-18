@@ -11,7 +11,7 @@ jobs:
     name: ✅ Check Github variable ${{ inputs.gh-var }}
     runs-on: ubuntu-latest
     steps:
-      - name: 𝐗 Check Github variable ${{ inputs.gh-var }} presence
+      - name: 🅰 Check Github variable ${{ inputs.gh-var }} presence
         env:
           GH_VAR: ${{ inputs.gh-var }}
         run: |

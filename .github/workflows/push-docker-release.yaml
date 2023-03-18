@@ -32,6 +32,7 @@ jobs:
       matrix:
         secret_name: [COSIGN_PRIVATE_KEY, COSIGN_PASSWORD]
     uses: ./.github/workflows/check-gh-secret.yaml
+    secrets: inherit
     with:
       gh-secret: ${{ matrix.secret_name }}
 
