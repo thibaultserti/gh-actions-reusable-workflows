@@ -27,15 +27,6 @@ jobs:
     with:
       gh-var: ${{ matrix.var_name }}
 
-  check-secrets:
-    strategy:
-      matrix:
-        secret_name: [COSIGN_PRIVATE_KEY, COSIGN_PASSWORD]
-    uses: ./.github/workflows/check-gh-secret.yaml
-    secrets: inherit
-    with:
-      gh-secret: ${{ matrix.secret_name }}
-
   release-docker:
     name: ⬆️ Push Docker image
     runs-on: ubuntu-latest
@@ -84,9 +75,6 @@ jobs:
       - name: ⚙️ Setup Sigstore
         uses: sigstore/cosign-installer@v2
 
-      - name: 🖊️ Write signing key to disk
-        run: echo "${{ secrets.COSIGN_PRIVATE_KEY }}}" > cosign.key
-
       - name: 📝 Sign container image with annotations from our environment
         run: |
           cosign sign --key cosign.key \
@@ -94,5 +82,3 @@ jobs:
             -a "workflow=${{ github.workflow }}" \
             -a "ref=${{ github.sha }}" \
             ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}:v${{ inputs.release }}
-        env:
-          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
