@@ -79,3 +79,19 @@ jobs:
           tags: ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}:v${{ inputs.release }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: ${{ inputs.platforms }}
+
+      - name: ⚙️ Setup Sigstore
+        uses: sigstore/cosign-installer@v2
+
+      - name: 🖊️ Write signing key to disk
+        run: echo "${{ secrets.COSIGN_PRIVATE_KEY }}}" > cosign.key
+
+      - name: 📝 Sign container image with annotations from our environment
+        run: |
+          cosign sign --key cosign.key \
+            -a "repo=${{ github.repository }}" \
+            -a "workflow=${{ github.workflow }}" \
+            -a "ref=${{ github.sha }}" \
+            ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}:v${{ inputs.release }}
+        env:
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
