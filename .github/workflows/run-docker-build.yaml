@@ -11,7 +11,7 @@ jobs:
       gh-var: ${{ matrix.var_name }}
 
   build:
-    name: Check Docker build
+    name: 🐳 Check Docker build
     runs-on: ubuntu-latest
     needs: [check-variables]
     steps:

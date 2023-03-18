@@ -4,7 +4,7 @@ on:
 
 jobs:
   release-github:
-    name: Create Release on Github
+    name: ⬆️ Create Release on Github
     runs-on: ubuntu-latest
     permissions:
       contents: write
