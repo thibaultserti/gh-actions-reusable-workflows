@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.3.1...v1.4.0) (2023-03-18)
+
+
+### Features
+
+* add check Github variables workflow ([4579088](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/4579088163d2fc96d69496afaedd427e6c030e68)), closes [#11](https://github.com/thibaultserti/gh-actions-reusable-workflows/issues/11)
+
 ## [1.3.1](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.3.0...v1.3.1) (2023-03-15)
 
 
