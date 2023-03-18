@@ -1,3 +1,10 @@
+## [1.5.5](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.5.4...v1.5.5) (2023-03-18)
+
+
+### Bug Fixes
+
+* remove v in docker tagging ([3dd58d1](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/3dd58d19822d5ef936074b1281c20a4b81923b23))
+
 ## [1.5.4](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.5.3...v1.5.4) (2023-03-18)
 
 
