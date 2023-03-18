@@ -64,11 +64,12 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🐳 Build and push Docker image
+        id: docker_push
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}:v${{ inputs.release }}
+          tags: ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}:${{ inputs.release }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: ${{ inputs.platforms }}
 
@@ -81,4 +82,4 @@ jobs:
             -a "repo=${{ github.repository }}" \
             -a "workflow=${{ github.workflow }}" \
             -a "ref=${{ github.sha }}" \
-            ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}:v${{ inputs.release }}
+            ${{ steps.docker_push.outputs.digest }}
