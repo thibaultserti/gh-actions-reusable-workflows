@@ -23,35 +23,35 @@ jobs:
       matrix:
         go-version: ${{ fromJson(inputs.go-version) }}
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: ${{ matrix.go-version }}
+      - name: ⚙️ Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go-version }}
 
-    - name: Go fmt
-      run: go fmt ./...
+      - name: ℹ Go fmt
+        run: go fmt ./...
 
-    - name: Go vet
-      run: go vet ./...
+      - name: 📊 Go vet
+        run: go vet ./...
 
-    - name: Go lint
-      uses: golangci/golangci-lint-action@v3
-      with:
-        version: ${{ inputs.golangci-lint-version }}
-        skip-pkg-cache: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: ✔ Go lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: ${{ inputs.golangci-lint-version }}
+          skip-pkg-cache: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Go tests
-      run: go test ./test
+      - name: 🛠 Go tests
+        run: go test ./test
 
-    - name: Run GoReleaser
-      uses: goreleaser/goreleaser-action@v4
-      with:
-        version: ${{ inputs.goreleaser-version }}
-        args: build --snapshot --clean
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 🏗️ Run GoReleaser
+        uses: goreleaser/goreleaser-action@v4
+        with:
+          version: ${{ inputs.goreleaser-version }}
+          args: build --snapshot --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

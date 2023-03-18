@@ -14,21 +14,21 @@ jobs:
     name: Check Docker build
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v3
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      - name: ⚙️ Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    - name: Build and export
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        tags: ${{ vars.NAME }}:latest
-        outputs: type=docker,dest=/tmp/${{ vars.NAME }}.tar
+      - name: 🐳 Build and export
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          tags: ${{ vars.NAME }}:latest
+          outputs: type=docker,dest=/tmp/${{ vars.NAME }}.tar
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ vars.NAME }}
-        path: /tmp/${{ vars.NAME }}.tar
+      - name: ⬆️ Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ vars.NAME }}
+          path: /tmp/${{ vars.NAME }}.tar

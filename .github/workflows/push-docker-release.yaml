@@ -32,38 +32,38 @@ jobs:
     runs-on: ubuntu-latest
     needs: [check-NAME, check-REGISTRY]
     steps:
-      - name: Checkout
+      - name: ⬇️ Checkout
         uses: actions/checkout@v3
 
-      - name: Extract metadata (tags, labels) for Docker
+      - name: 📚 Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v4
         with:
           images: ${{ vars.REGISTRY }}/${{ vars.NAME }}
 
-      - name: Set up Docker Buildx
+      - name: ⚙️ Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Download artifact
+      - name: ⬇ Download artifact
         uses: actions/download-artifact@v3
         if: ${{ inputs.use-prebuilt-image }}
         with:
           name: ${{ vars.NAME }}
           path: /tmp
 
-      - name: Load image
+      - name: 🔌 Load image
         if: ${{ inputs.use-prebuilt-image }}
         run: |
           docker load --input /tmp/${{ vars.NAME }}.tar
 
-      - name: Log in to the Container registry
+      - name: 🔑 Log in to the Container registry
         uses: docker/login-action@v2
         with:
           registry: ${{ vars.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: 🐳 Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
