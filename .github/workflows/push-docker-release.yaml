@@ -19,7 +19,7 @@ on:
         type: string
 
 jobs:
-  check:
+  check-variables:
     strategy:
       matrix:
         var_name: [NAME, REGISTRY]
@@ -27,7 +27,7 @@ jobs:
     with:
       gh-var: ${{ matrix.var_name }}
 
-  check-secret:
+  check-secrets:
     strategy:
       matrix:
         secret_name: [COSIGN_PRIVATE_KEY, COSIGN_PASSWORD]
@@ -38,7 +38,7 @@ jobs:
   release-docker:
     name: Push Docker image
     runs-on: ubuntu-latest
-    needs: [check-NAME, check-REGISTRY]
+    needs: [check-variables, check-secrets]
     steps:
       - name: ⬇️ Checkout
         uses: actions/checkout@v3
