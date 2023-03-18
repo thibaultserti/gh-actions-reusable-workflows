@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.5.1...v1.5.2) (2023-03-18)
+
+
+### Bug Fixes
+
+* use sigstore with OIDC signing ([1fa18e3](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/1fa18e3e4ecd5402567519062e184e709d8b61c2))
+
 ## [1.5.1](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.5.0...v1.5.1) (2023-03-18)
 
 
