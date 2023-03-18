@@ -6,11 +6,6 @@ on:
         description: "Release version"
         value: ${{ jobs.release-github.outputs.new_release_version }}
 jobs:
-  # check-variables:
-  #   uses: ./.github/workflows/check-gh-vars.yaml
-  #   with:
-  #     gh-vars: "['NAME','REGISTRY']"
-
   release-github:
     name: Create Release on Github
     runs-on: ubuntu-latest

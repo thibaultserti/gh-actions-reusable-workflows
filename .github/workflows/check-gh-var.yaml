@@ -1,0 +1,23 @@
+name: check-gh-variable
+on:
+  workflow_call:
+    inputs:
+      gh-var:
+        description: 'Github variable'
+        required: true
+        type: string
+jobs:
+  check:
+    name: Check Github variable ${{ inputs.gh-var }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Github variable ${{ inputs.gh-var }} presence
+        env:
+          GH_VAR: ${{ inputs.gh-var }}
+        run: |
+          if [ -z "${{ vars[format('{0}', env.GH_VAR)] }}" ]; then
+            echo "Github variable ${{ env.GH_VAR }} is missing."
+            exit 1
+          else
+            echo "Github variable ${{ env.GH_VAR }} is present."
+          fi
