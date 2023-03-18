@@ -8,7 +8,7 @@ on:
         type: string
 jobs:
   check:
-    name: Check Github variable ${{ inputs.gh-var }}
+    name: ✅ Check Github variable ${{ inputs.gh-var }}
     runs-on: ubuntu-latest
     steps:
       - name: Check Github variable ${{ inputs.gh-var }} presence
