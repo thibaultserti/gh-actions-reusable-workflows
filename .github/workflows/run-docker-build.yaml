@@ -6,7 +6,7 @@ jobs:
     strategy:
       matrix:
         var_name: [NAME]
-    uses: ./.github/workflows/check-gh-var.yaml@main
+    uses: ./.github/workflows/check-gh-var.yaml
     with:
       gh-var: ${{ matrix.var_name }}
 

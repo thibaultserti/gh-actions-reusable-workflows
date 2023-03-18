@@ -23,9 +23,17 @@ jobs:
     strategy:
       matrix:
         var_name: [NAME, REGISTRY]
-    uses: ./.github/workflows/check-gh-var.yaml@main
+    uses: ./.github/workflows/check-gh-var.yaml
     with:
       gh-var: ${{ matrix.var_name }}
+
+  check-secret:
+    strategy:
+      matrix:
+        secret_name: [COSIGN_PRIVATE_KEY, COSIGN_PASSWORD]
+    uses: ./.github/workflows/check-gh-secret.yaml
+    with:
+      gh-secret: ${{ matrix.secret_name }}
 
   release-docker:
     name: Push Docker image
