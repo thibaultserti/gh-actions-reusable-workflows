@@ -12,7 +12,7 @@ on:
         value: ${{ jobs.release-github.outputs.new_release_version }}
 jobs:
   release-github:
-    name: Create Release on Github
+    name: ⬆️ Create Release on Github
     runs-on: ubuntu-latest
     permissions:
       contents: write
