@@ -1,3 +1,10 @@
+## [1.5.6](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.5.5...v1.5.6) (2023-03-19)
+
+
+### Bug Fixes
+
+* fix signed image digest ([6cd59d5](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/6cd59d50b95298251cdc03d586b7d80909e8da97))
+
 ## [1.5.5](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.5.4...v1.5.5) (2023-03-18)
 
 
