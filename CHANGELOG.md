@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.6.1...v1.6.2) (2023-03-20)
+
+
+### Bug Fixes
+
+* change 1.20.x to 1.20 in default go-version ([29113ea](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/29113eaac01c07956089bca78a124efc0b726d31))
+
 ## [1.6.1](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.6.0...v1.6.1) (2023-03-20)
 
 
