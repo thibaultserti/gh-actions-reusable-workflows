@@ -10,10 +10,41 @@ on:
         default: "1.4.0"
         required: false
         type: string
+      enable-codeclimate:
+        default: true
+        required: false
+        type: boolean
+      enable-codecov:
+        default: true
+        required: false
+        type: boolean
+      enable-codeql:
+        default: true
+        required: false
+        type: boolean
+
 
 jobs:
+  check-secret-codeclimate:
+    strategy:
+      matrix:
+        secret_name: [CODECLIMATE_TEST_REPORTER_ID]
+    uses: ./.github/workflows/check-gh-secret.yaml
+    secrets: inherit
+    with:
+      gh-secret: ${{ matrix.secret_name }}
+  check-secret-codecov:
+    strategy:
+      matrix:
+        secret_name: [CODECOV_TOKEN]
+    uses: ./.github/workflows/check-gh-secret.yaml
+    secrets: inherit
+    with:
+      gh-secret: ${{ matrix.secret_name }}
+
   quality:
     name: 🍰 Check Python quality
+    needs: [check-secret-codeclimate, check-secret-codecov]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -58,5 +89,52 @@ jobs:
       - name: 📊 Mypy
         run: poetry run python -m mypy --install-types --non-interactive src/  tests/
 
-      - name: 🛠 Pytest
-        run: poetry run python -m pytest tests/
+      - name: 🛠 Coverage and tests
+        run: poetry run python -m coverage run -m pytest -v tests/
+
+      - name: ☀️ Codeclimate
+        if: ${{ inputs.enable-codeclimate }}
+        uses: paambaati/codeclimate-action@v3.2.0 #forced to use full version
+        with:
+          coverageCommand: poetry run python -m coverage xml
+          coverageLocations: ${{github.workspace}}/*.xml:coverage.py
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TEST_REPORTER_ID }}
+
+      - name: 🍀 Codecov
+        uses: codecov/codecov-action@v3
+        if: ${{ inputs.enable-codecov }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          flags: unittests
+          fail_ci_if_error: true
+          verbose: true
+
+  security:
+    name: 🔐 Check Python security
+    needs: [quality]
+    if: ${{ inputs.enable-codeql }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Set up Python
+        uses: actions/setup-python@v4
+
+      - name: ⚙️ Install Python Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ inputs.poetry-version }}
+
+      - name: ⚙️ Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: "python"
+
+      - name: 🏗️ Autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      - name: 📈 Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
