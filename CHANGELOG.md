@@ -1,3 +1,11 @@
+# [1.6.0](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.5.6...v1.6.0) (2023-03-20)
+
+
+### Features
+
+* **go:** add codeclimate, codecov and codeQL ([0e3c1ce](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/0e3c1ce5f49cbc0abf275c9923ee76a4e4f4297a)), closes [#1](https://github.com/thibaultserti/gh-actions-reusable-workflows/issues/1) [#2](https://github.com/thibaultserti/gh-actions-reusable-workflows/issues/2) [#3](https://github.com/thibaultserti/gh-actions-reusable-workflows/issues/3)
+* **python:** add codeclimate, codecov and codeQL ([ef5953f](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/ef5953fbe4accce193ba1d0539232a2d4af5a992)), closes [#1](https://github.com/thibaultserti/gh-actions-reusable-workflows/issues/1) [#2](https://github.com/thibaultserti/gh-actions-reusable-workflows/issues/2) [#3](https://github.com/thibaultserti/gh-actions-reusable-workflows/issues/3)
+
 ## [1.5.6](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.5.5...v1.5.6) (2023-03-19)
 
 
