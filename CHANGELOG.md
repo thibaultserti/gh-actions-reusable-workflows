@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.6.0...v1.6.1) (2023-03-20)
+
+
+### Bug Fixes
+
+* **go:** fix prefix in codeclimate ([dc91251](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/dc912516418311951d92738415807c74806d7caf))
+
 # [1.6.0](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.5.6...v1.6.0) (2023-03-20)
 
 
