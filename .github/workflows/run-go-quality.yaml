@@ -14,10 +14,40 @@ on:
         default: "v1.16.1"
         required: false
         type: string
+      enable-codeclimate:
+        default: true
+        required: false
+        type: boolean
+      enable-codecov:
+        default: true
+        required: false
+        type: boolean
+      enable-codeql:
+        default: true
+        required: false
+        type: boolean
 
 jobs:
+  check-secret-codeclimate:
+    strategy:
+      matrix:
+        secret_name: [CODECLIMATE_TEST_REPORTER_ID]
+    uses: ./.github/workflows/check-gh-secret.yaml
+    secrets: inherit
+    with:
+      gh-secret: ${{ matrix.secret_name }}
+  check-secret-codecov:
+    strategy:
+      matrix:
+        secret_name: [CODECOV_TOKEN]
+    uses: ./.github/workflows/check-gh-secret.yaml
+    secrets: inherit
+    with:
+      gh-secret: ${{ matrix.secret_name }}
+
   quality:
     name: 🍰 Check Golang quality
+    needs: [check-secret-codeclimate, check-secret-codecov]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -55,3 +85,45 @@ jobs:
           args: build --snapshot --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ☀️ Codeclimate
+        if: ${{ inputs.enable-codeclimate }}
+        uses: paambaati/codeclimate-action@v3.2.0 #forced to use full version
+        with:
+          coverageCommand: go test -v -race -vet off -covermode atomic -coverprofile coverage.gocov ./test/... -coverpkg=./...
+          coverageLocations: ${{github.workspace}}/coverage.gocov:gocov
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TEST_REPORTER_ID }}
+
+      - name: 🍀 Codecov
+        uses: codecov/codecov-action@v3
+        if: ${{ inputs.enable-codecov }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.gocov
+          flags: unittests
+          fail_ci_if_error: true
+          verbose: true
+
+  security:
+    name: 🔐 Check Python security
+    needs: [quality]
+    if: ${{ inputs.enable-codeql }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Set up Go
+        uses: actions/setup-go@v3
+
+      - name: ⚙️ Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: "go"
+
+      - name: 🏗️ Autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      - name: 📈 Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
