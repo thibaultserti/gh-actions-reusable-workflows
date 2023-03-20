@@ -92,6 +92,7 @@ jobs:
         with:
           coverageCommand: go test -v -race -vet off -covermode atomic -coverprofile coverage.gocov ./test/... -coverpkg=./...
           coverageLocations: ${{github.workspace}}/coverage.gocov:gocov
+          prefix: ${{ github.event.repository.name }}
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TEST_REPORTER_ID }}
 
