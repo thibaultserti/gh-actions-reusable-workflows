@@ -29,6 +29,7 @@ jobs:
     strategy:
       matrix:
         secret_name: [CODECLIMATE_TEST_REPORTER_ID]
+    if: ${{ inputs.enable-codeclimate }}
     uses: ./.github/workflows/check-gh-secret.yaml
     secrets: inherit
     with:
@@ -37,6 +38,7 @@ jobs:
     strategy:
       matrix:
         secret_name: [CODECOV_TOKEN]
+    if: ${{ inputs.enable-codecov }}
     uses: ./.github/workflows/check-gh-secret.yaml
     secrets: inherit
     with:
