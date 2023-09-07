@@ -1,4 +1,4 @@
-name: go-release
+name: python-release
 on:
   workflow_call:
     outputs:
