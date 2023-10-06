@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.6.2...v1.7.0) (2023-10-06)
+
+
+### Features
+
+* change default ([b4ee856](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/b4ee8561b28cf36ba42e8421083c2ecef73d2b08))
+
 ## [1.6.2](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.6.1...v1.6.2) (2023-03-20)
 
 
