@@ -2,18 +2,9 @@ name: docker-build
 on:
   workflow_call:
 jobs:
-  check-variables:
-    strategy:
-      matrix:
-        var_name: [NAME]
-    uses: ./.github/workflows/check-gh-var.yaml
-    with:
-      gh-var: ${{ matrix.var_name }}
-
   build:
     name: 🐳 Check Docker build
     runs-on: ubuntu-latest
-    needs: [check-variables]
     steps:
       - name: ⬇️ Checkout
         uses: actions/checkout@v3

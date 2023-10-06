@@ -3,7 +3,7 @@ on:
   workflow_call:
     inputs:
       go-version:
-        default: "['1.18','1.19','1.20']"
+        default: "['1.18','1.19','1.20','1.21']"
         required: false
         type: string
       golangci-lint-version:
@@ -15,39 +15,21 @@ on:
         required: false
         type: string
       enable-codeclimate:
-        default: true
+        default: false
         required: false
         type: boolean
       enable-codecov:
-        default: true
+        default: false
         required: false
         type: boolean
       enable-codeql:
-        default: true
+        default: false
         required: false
         type: boolean
 
 jobs:
-  check-secret-codeclimate:
-    strategy:
-      matrix:
-        secret_name: [CODECLIMATE_TEST_REPORTER_ID]
-    uses: ./.github/workflows/check-gh-secret.yaml
-    secrets: inherit
-    with:
-      gh-secret: ${{ matrix.secret_name }}
-  check-secret-codecov:
-    strategy:
-      matrix:
-        secret_name: [CODECOV_TOKEN]
-    uses: ./.github/workflows/check-gh-secret.yaml
-    secrets: inherit
-    with:
-      gh-secret: ${{ matrix.secret_name }}
-
   quality:
     name: 🍰 Check Golang quality
-    needs: [check-secret-codeclimate, check-secret-codecov]
     runs-on: ubuntu-latest
     strategy:
       matrix:

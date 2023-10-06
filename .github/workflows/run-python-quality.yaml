@@ -3,7 +3,7 @@ on:
   workflow_call:
     inputs:
       python-version:
-        default: "['3.8','3.9','3.10']"
+        default: "['3.8','3.9','3.10','3.11']"
         required: false
         type: string
       poetry-version:
@@ -11,40 +11,22 @@ on:
         required: false
         type: string
       enable-codeclimate:
-        default: true
+        default: false
         required: false
         type: boolean
       enable-codecov:
-        default: true
+        default: false
         required: false
         type: boolean
       enable-codeql:
-        default: true
+        default: false
         required: false
         type: boolean
 
 
 jobs:
-  check-secret-codeclimate:
-    strategy:
-      matrix:
-        secret_name: [CODECLIMATE_TEST_REPORTER_ID]
-    uses: ./.github/workflows/check-gh-secret.yaml
-    secrets: inherit
-    with:
-      gh-secret: ${{ matrix.secret_name }}
-  check-secret-codecov:
-    strategy:
-      matrix:
-        secret_name: [CODECOV_TOKEN]
-    uses: ./.github/workflows/check-gh-secret.yaml
-    secrets: inherit
-    with:
-      gh-secret: ${{ matrix.secret_name }}
-
   quality:
     name: 🍰 Check Python quality
-    needs: [check-secret-codeclimate, check-secret-codecov]
     runs-on: ubuntu-latest
     strategy:
       matrix:
