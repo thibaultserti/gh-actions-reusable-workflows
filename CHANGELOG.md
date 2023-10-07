@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.7.0...v1.8.0) (2023-10-07)
+
+
+### Features
+
+* release docker image on latest each time ([0a3321f](https://github.com/thibaultserti/gh-actions-reusable-workflows/commit/0a3321f34063c867cea55b95823a34c78c8fc822)), closes [#19](https://github.com/thibaultserti/gh-actions-reusable-workflows/issues/19)
+
 # [1.7.0](https://github.com/thibaultserti/gh-actions-reusable-workflows/compare/v1.6.2...v1.7.0) (2023-10-06)
 
 
