@@ -54,36 +54,26 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🐳 Build and push Docker image with tag ${{ inputs.release }}
-        if: ${{ inputs.release }} != 'latest'
-        id: docker_push_release
+      - name: 🐳 Build and push Docker image
+        if: ${{ inputs.release }}
+        id: docker_push
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}:${{ inputs.release }}
-          labels: ${{ steps.meta.outputs.labels }}
-          platforms: ${{ inputs.platforms }}
-
-      - name: 🐳 Build and push Docker image with tag latest
-        id: docker_push_latest
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}:latest
+          tags: ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}:${{ inputs.release }},${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
           platforms: ${{ inputs.platforms }}
 
       - name: ⚙️ Setup Sigstore
-        if: ${{ inputs.enable-signing }} && ${{ inputs.release }} != 'latest'
+        if: ${{ inputs.enable-signing }}
         uses: sigstore/cosign-installer@v3
 
       - name: 📝 Sign container image with annotations from our environment
-        if: ${{ inputs.enable-signing }} && ${{ inputs.release }} != 'latest'
+        if: ${{ inputs.enable-signing }}
         run: |
           cosign sign -y \
             -a "repo=${{ github.repository }}" \
             -a "workflow=${{ github.workflow }}" \
             -a "ref=${{ github.sha }}" \
-            ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}@${{ steps.docker_push_release.outputs.digest }}
+            ${{ vars.REGISTRY }}/${{ github.actor }}/${{ vars.NAME }}@${{ steps.docker_push.outputs.digest }}
