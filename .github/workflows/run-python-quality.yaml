@@ -63,16 +63,16 @@ jobs:
         run: poetry update
 
       - name: ⚫️ Black
-        run: poetry run python -m black -vv src/ tests/
+        run: poetry run python -m black -vv src/
 
       - name: ✔ Pylint
-        run: poetry run python -m pylint -vv src/ tests/
+        run: poetry run python -m pylint -vv src/
 
       - name: 📊 Mypy
-        run: poetry run python -m mypy --install-types --non-interactive src/  tests/
+        run: poetry run python -m mypy --install-types --non-interactive src/
 
       - name: 🛠 Coverage and tests
-        run: poetry run python -m coverage run -m pytest -v tests/
+        run: poetry run python -m coverage run -m pytest -v src/tests/
 
       - name: ☀️ Codeclimate
         if: ${{ inputs.enable-codeclimate }}
