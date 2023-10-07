@@ -3,7 +3,7 @@ on:
   workflow_call:
     inputs:
       platforms:
-        default: "linux/amd64,linux/arm/v7,linux/arm64/v8"
+        default: "linux/amd64"
         required: false
         type: string
       use-prebuilt-image:
