@@ -44,7 +44,7 @@ jobs:
           go-version: ${{ matrix.go-version }}
           
       - name: 🔑 Load conf/secrets in tests
-        run: cp -v $GITHUB_WORKSPACE/test/* test/
+        run: cp -vn $GITHUB_WORKSPACE/test/* test/
 
       - name: ℹ Go fmt
         run: go fmt ./...
