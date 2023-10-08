@@ -43,11 +43,18 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
           
+      - name: 🗺️ Map secrets to env 
+        uses: Firenza/secrets-to-env@v1.2.0
+        with:
+            secrets: ${{ toJSON(secrets) }}
+            secret_filter_regex: GOTEST_*
+          
       - name: 🔑 Load conf/secrets in tests
         run:  |
           if [ -f test/get_secrets.sh ]; then
             ./test/get_secrets.sh
           fi
+          
       - name: ℹ Go fmt
         run: go fmt ./...
 
