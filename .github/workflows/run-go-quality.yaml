@@ -46,7 +46,7 @@ jobs:
       - name: 🔑 Load conf/secrets in tests
         run:  |
           if [ -f test/get_secrets.sh ]; then
-            ./get_secrets.sh
+            ./test/get_secrets.sh
           fi
       - name: ℹ Go fmt
         run: go fmt ./...
